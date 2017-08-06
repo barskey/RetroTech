@@ -8,6 +8,8 @@ public class EnemyController : MonoBehaviour
 	public LayerMask whatIsGound;
 	public float jumpForce = 200f;
 	public float speed;
+	public float speedVar;
+	public LayerMask whatIsPlatform;
 
 	bool facingRight = true;
 	bool grounded = false;
@@ -22,7 +24,9 @@ public class EnemyController : MonoBehaviour
 		player = GameObject.Find ("Player").transform;
 	}
 	
-	void FixedUpdate () {
+	void FixedUpdate ()
+	{
+		grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, whatIsGound);
 
 		float move = player.position.x - transform.position.x;
 
@@ -32,6 +36,26 @@ public class EnemyController : MonoBehaviour
 			Flip ();
 		else if (move < 0 && facingRight)
 			Flip ();
+	}
+
+	void Update()
+	{
+		float dist_y = player.position.y - transform.position.y;
+		if (grounded && dist_y > 0.1f)
+		{
+			if (PlatformAbove ())
+			{
+				rb2d.AddForce (new Vector2 (0, jumpForce));
+				Debug.Log ("Jumped");
+			}
+		}
+
+	}
+
+	bool PlatformAbove()
+	{
+		RaycastHit2D hit = Physics2D.Raycast (transform.position, Vector2.up, 0.2f, whatIsPlatform);
+		return hit;
 	}
 
 	void Flip()
