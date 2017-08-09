@@ -6,7 +6,7 @@ public class GridUnit : MonoBehaviour {
 
 	public float unitSize = 0.1f;
 	public int numUnits = 4;
-	public string name;
+	public string gName;
 	public bool canNavigateTo = true;
 
 	void OnDrawGizmosSelected() {

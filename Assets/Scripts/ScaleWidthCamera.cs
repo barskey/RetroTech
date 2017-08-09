@@ -6,11 +6,11 @@ public class ScaleWidthCamera : MonoBehaviour {
 	public int targetWidth = 640;
 	public float pixelsToUnits = 100;
 
-	private Camera camera;
+	private Camera gameCamera;
 
 	void Start()
 	{
-		camera = GetComponent<Camera> ();
+		gameCamera = GetComponent<Camera> ();
 	}
 
 	
@@ -18,6 +18,6 @@ public class ScaleWidthCamera : MonoBehaviour {
 	void Update () {
 		int height = Mathf.RoundToInt (targetWidth / (float)Screen.width * Screen.height);
 
-		camera.orthographicSize = height / pixelsToUnits / 2;
+		gameCamera.orthographicSize = height / pixelsToUnits / 2;
 	}
 }
