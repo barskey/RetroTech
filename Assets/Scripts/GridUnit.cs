@@ -16,4 +16,14 @@ public class GridUnit : MonoBehaviour {
 			Gizmos.color = new Color (1f, 0f, 0f, 0.2f); // red
 		Gizmos.DrawCube(transform.position, new Vector3(unitSize * numUnits, unitSize * numUnits, 0));
 	}
+
+	void OnTriggerEnter2D(Collider2D col)
+	{
+		if (col.name == "Player") {
+			col.GetComponent<PlayerController>().currentGrid = gameObject;
+		} else if (col.name == "Enemy") {
+			col.GetComponent<EnemyController> ().SetCurrentGrid(gameObject);
+		}
+	}
+
 }

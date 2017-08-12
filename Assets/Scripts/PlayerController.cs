@@ -10,9 +10,11 @@ public class PlayerController : MonoBehaviour
 	public float jumpForce = 200f;
 	public float maxSpeed = 5f;
 
+	public GameObject currentGrid;
+
 	bool facingRight = true;
 	bool grounded = false;
-	float groundRadius = 0.1f;
+	float groundRadius = 0.01f;
 	Animator anim;
 
 	private Rigidbody2D rb2d;
@@ -25,7 +27,7 @@ public class PlayerController : MonoBehaviour
 	}
 
 	void FixedUpdate () {
-		grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, whatIsGound);
+		grounded = (true ? rb2d.velocity.y == 0 : false);
 
 		float move = Input.GetAxis ("Horizontal");
 
@@ -48,8 +50,8 @@ public class PlayerController : MonoBehaviour
 			rb2d.AddForce(new Vector2(0, jumpForce));
 		}
 
-		if (Input.GetMouseButtonDown(0))
-			Attack();
+		//if (Input.GetMouseButtonDown(0))
+		//	Attack();
 	}
 
 	void Flip()
@@ -59,10 +61,4 @@ public class PlayerController : MonoBehaviour
 		theScale.x *= -1;
 		transform.localScale = theScale;
 	}
-
-	void Attack()
-	{
-		anim.SetTrigger ("Slash");
-	}
-
 }
