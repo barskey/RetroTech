@@ -5,8 +5,6 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
 	public Transform groundCheckCircle; // used to check if ground is overlapping
-	public LayerMask whatIsGound; // Layer Mask used for calculating if this is on ground
-	public LayerMask whatIsGrid; // Layer Mask used for masking only GridUnits
 	public float jumpForce = 200f; // force that determines how high this jumps
 	public float maxSpeed = 0.9f; // maximum speed
 	public float accel = 0.1f; // how fast this enemy accelerates
@@ -91,7 +89,7 @@ public class EnemyController : MonoBehaviour
 
 				if (moveVector.y > 0 && moveVector.x != 0) { // if next point is diagonal up
 					if (distToCurrentCenter > 0.02 || distToCurrentCenter < -0.02) {
-						Debug.Log (distToCurrentCenter);
+						//Debug.Log (distToCurrentCenter);
 						// move to current grid center
 						Move (dir);
 					} else {
@@ -163,8 +161,8 @@ public class EnemyController : MonoBehaviour
 
 	void Jump(float dir)
 	{
-		rb2d.velocity.Set (0f, 0f);	
-		rb2d.AddForce (new Vector2 (100 * dir, jumpForce));
+		//rb2d.velocity.Set (0f, 0f);	
+		rb2d.AddForce (new Vector2 (50 * dir, jumpForce));
 	}
 
 	// returns position of grid square given coords of grid sqaure in vector2

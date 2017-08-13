@@ -21,7 +21,7 @@ public class GridUnit : MonoBehaviour {
 	{
 		if (col.name == "Player") {
 			col.GetComponent<PlayerController>().currentGrid = gameObject;
-		} else if (col.name == "Enemy") {
+		} else {
 			col.GetComponent<EnemyController> ().SetCurrentGrid(gameObject);
 		}
 	}
