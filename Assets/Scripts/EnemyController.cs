@@ -28,18 +28,20 @@ public class EnemyController : MonoBehaviour
 	private GridUnit enemyScript; // script attached to enemyGrid
 	private Vector2 nextGridCoord; // coords of next grid square enemy will move toward
 	private GameObject playerGrid; // grid square the player is currently in
+	private int pathIndex = 0;
 
 	int gridRows; // NavGrid # of rows
 	int gridCols; // NavGrid # of cols
 	bool[,] tilesmap; // tiles in grid used for pathfinding
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 		rb2d = GetComponent<Rigidbody2D> ();
 		player = GameObject.Find ("Player");
 
 		// Set up the pathfinding grid
-		GameObject navGrid = GameObject.Find("NavGrid");
+		GameObject navGrid = GameObject.Find ("NavGrid");
 		NavGrid navGridScript = navGrid.GetComponent<NavGrid> (); // get the script attached
 		gridRows = navGridScript.gridRows;
 		gridCols = navGridScript.gridCols;
@@ -55,15 +57,10 @@ public class EnemyController : MonoBehaviour
 		}
 
 		// create a grid object for pathfinding
-		grid = new PathFind.Grid(gridCols, gridRows, tilesmap);
+		grid = new PathFind.Grid (gridCols, gridRows, tilesmap);
 	}
 
-	void Update()
-	{
-
-	}
-
-	void FixedUpdate()
+	void FixedUpdate ()
 	{
 		// set the flag if player is standing on ground (hence can jump)
 		//grounded = Physics2D.OverlapCircle (groundCheckCircle.position, groundRadius, whatIsGound);
@@ -85,9 +82,9 @@ public class EnemyController : MonoBehaviour
 			moveVector = nextGridCoord - curGridCoord;
 		}
 
-		float xDist = GetGridPos(nextGridCoord).x - transform.position.x;
-		float dir = Mathf.Sign(xDist);
-		Debug.Log (string.Format("moveVector: {0}, xDist: {1}, dir:{2}", moveVector, xDist, dir));
+		float xDist = GetGridPos (nextGridCoord).x - transform.position.x;
+		float dir = Mathf.Sign (xDist);
+		Debug.Log (string.Format ("moveVector: {0}, xDist: {1}, dir:{2}", moveVector, xDist, dir));
 		if (grounded) {
 			if (moveVector.y > 0 && moveVector.x != 0) { // if next point is diagonal up
 				if (Mathf.Abs(xDist) > 0.43) {
@@ -101,7 +98,7 @@ public class EnemyController : MonoBehaviour
 				// move in x toward next point
 				Move (dir);
 			} else if (moveVector.y > 0 && moveVector.x == 0) { // else if next point is above
-				if (Mathf.Abs(xDist) > 0.03) {
+				if (Mathf.Abs (xDist) > 0.03) {
 					// move to current grid center
 					Move (dir);
 				} else {
@@ -110,23 +107,24 @@ public class EnemyController : MonoBehaviour
 				}
 			} else if (moveVector.y < 0 && moveVector.x == 0) { //else if next point is below
 				// move right/left toward next point
-				nextGridCoord = new Vector2(enemyScript.col + dir, enemyScript.row);
+				nextGridCoord = new Vector2 (enemyScript.col + dir, enemyScript.row);
 				Move (dir);
 			} else {
 				// move in x toward next point
 				Move (dir);
 			}
 		}
+		Debug.Log (string.Format ("Moving toward w:{0},h:{1}", nextGridCoord.x, nextGridCoord.y));
 	}
 
-	void FindNewPath()
+	void FindNewPath ()
 	{
 		// get the script component so we can get row,col
 		GridUnit playerScript = playerGrid.GetComponent<GridUnit> ();
 
 		// create source and target points
-		PathFind.Point _from = new PathFind.Point(enemyScript.col, enemyScript.row);
-		PathFind.Point _to = new PathFind.Point(playerScript.col, playerScript.row);
+		PathFind.Point _from = new PathFind.Point (enemyScript.col, enemyScript.row);
+		PathFind.Point _to = new PathFind.Point (playerScript.col, playerScript.row);
 
 		// get path
 		// path will either be a list of Points (x, y), or an empty list if no path is found.
@@ -136,14 +134,15 @@ public class EnemyController : MonoBehaviour
 		if (newList.Count > 0) {
 			pathToPlayer = newList;
 			nextGridCoord = new Vector2 (pathToPlayer [0].x, pathToPlayer [0].y);
-			Debug.Log (nextGridCoord);
+			//pathIndex = 0;
+			Debug.Log (string.Format ("Next grid coord; {0}", nextGridCoord.ToString()));
 		}
 	}
 
-	void Move(float moveDir)
+	void Move (float moveDir)
 	{
 		currentSpeed += accel; // speed up
-		float moveSpeed = Mathf.Clamp(currentSpeed, 0f, maxSpeed); // cap speed at maxSpeed
+		float moveSpeed = Mathf.Clamp (currentSpeed, 0f, maxSpeed); // cap speed at maxSpeed
 
 		if (moveDir > 0 && !facingRight)
 			Flip ();
@@ -151,17 +150,17 @@ public class EnemyController : MonoBehaviour
 			Flip ();
 
 		rb2d.velocity = new Vector2 (moveSpeed * moveDir, rb2d.velocity.y);
-		Debug.Log(string.Format("Moving {0}", moveSpeed * moveDir));
+		Debug.Log (string.Format ("Moving {0}", moveSpeed * moveDir));
 	}
 
-	void Jump(float dir)
+	void Jump (float dir)
 	{
 		//rb2d.velocity.Set (0f, 0f);
 		rb2d.AddForce (new Vector2 (25f * dir, jumpForce));
-		Debug.Log(string.Format("Jumping {0}", dir));
+		Debug.Log (string.Format ("Jumping {0}", dir));
 	}
 
-	void Flip()
+	void Flip ()
 	{
 		facingRight = !facingRight;
 		Vector3 theScale = transform.localScale;
@@ -169,26 +168,23 @@ public class EnemyController : MonoBehaviour
 		transform.localScale = theScale;
 	}
 
-	void OnTriggerEnter2D(Collider2D col)
+	void OnTriggerEnter2D (Collider2D col)
 	{
 		enemyGrid = col.gameObject;
 		enemyScript = enemyGrid.GetComponent<GridUnit> ();
+		//pathIndex++;
+		//if (pathIndex >= pathToPlayer.Count) {
+		//	pathIndex = pathToPlayer.Count;
+		//}
+		Debug.Log ("OnTriggerEnter called.");
 		if (playerGrid)
 			FindNewPath ();
 	}
 
-	Vector3 GetGridPos(Vector2 gridCoord)
+	Vector3 GetGridPos (Vector2 gridCoord)
 	{
 		string gridName = string.Format ("GridUnit_{0}-{1}", gridCoord.y, gridCoord.x);
 		return GameObject.Find (gridName).transform.position;
-	}
-
-	bool CheckCanNav(float dir)
-	{
-		// check the next grid over and return if can navigate to
-		string gridName = string.Format ("GridUnit_{0}-{1}", enemyScript.col + dir, enemyScript.row);
-		Debug.Log (GameObject.Find (gridName).GetComponent<GridUnit> ().canNavigateTo);
-		return GameObject.Find (gridName).GetComponent<GridUnit> ().canNavigateTo;
 	}
 
 }

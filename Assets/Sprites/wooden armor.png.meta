@@ -1,17 +1,17 @@
 fileFormatVersion: 2
-guid: 3e7e4187a68744be091a39a047996e39
-timeCreated: 1502572835
+guid: a7bab82f99a334518b119b72ed121dbe
+timeCreated: 1503104890
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: dude run 2_0
-    21300002: dude run 2_1
-    21300004: dude run 2_2
-    21300006: dude run 2_3
-    21300008: dude run 2_4
-    21300010: dude run 2_5
-    21300012: dude run 2_6
-    21300014: dude run 2_7
+    21300000: wooden armor_0
+    21300002: wooden armor_1
+    21300004: wooden armor_2
+    21300006: wooden armor_3
+    21300008: wooden armor_4
+    21300010: wooden armor_5
+    21300012: wooden armor_6
+    21300014: wooden armor_7
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -59,7 +59,7 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 256
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -67,7 +67,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Standalone
-    maxTextureSize: 512
+    maxTextureSize: 256
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -75,7 +75,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: WebGL
-    maxTextureSize: 512
+    maxTextureSize: 256
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -86,7 +86,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: dude run 2_0
+      name: wooden armor_0
       rect:
         serializedVersion: 2
         x: 0
@@ -99,7 +99,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: dude run 2_1
+      name: wooden armor_1
       rect:
         serializedVersion: 2
         x: 32
@@ -112,7 +112,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: dude run 2_2
+      name: wooden armor_2
       rect:
         serializedVersion: 2
         x: 64
@@ -125,7 +125,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: dude run 2_3
+      name: wooden armor_3
       rect:
         serializedVersion: 2
         x: 96
@@ -138,7 +138,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: dude run 2_4
+      name: wooden armor_4
       rect:
         serializedVersion: 2
         x: 128
@@ -151,7 +151,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: dude run 2_5
+      name: wooden armor_5
       rect:
         serializedVersion: 2
         x: 160
@@ -164,7 +164,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: dude run 2_6
+      name: wooden armor_6
       rect:
         serializedVersion: 2
         x: 192
@@ -177,7 +177,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: dude run 2_7
+      name: wooden armor_7
       rect:
         serializedVersion: 2
         x: 224
