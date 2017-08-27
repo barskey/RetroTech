@@ -21,8 +21,8 @@ public class PlayerController : MonoBehaviour
 
 	void Start()
 	{
-		rb2d = GetComponent<Rigidbody2D> ();
-		anim = GetComponent<Animator> ();
+		rb2d = GetComponent <Rigidbody2D> ();
+		anim = GetComponent <Animator> ();
 
 	}
 
@@ -64,6 +64,8 @@ public class PlayerController : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
-		currentGrid = col.gameObject;
+		if (col.gameObject.name.StartsWith ("GridUnit")) {
+			currentGrid = col.gameObject;
+		}
 	}
 }
