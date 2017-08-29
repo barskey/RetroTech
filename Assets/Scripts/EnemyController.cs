@@ -194,21 +194,6 @@ public class EnemyController : MonoBehaviour
 		transform.localScale = theScale;
 	}
 
-	void OnTriggerEnter2D (Collider2D col)
-	{
-		if (col.gameObject.name.StartsWith ("GridUnit")) {
-			enemyGrid = col.gameObject;
-			enemyScript = enemyGrid.GetComponent <GridUnit> ();
-			//pathIndex++;
-			//if (pathIndex >= pathToPlayer.Count) {
-			//	pathIndex = pathToPlayer.Count;
-			//}
-			//Debug.Log ("OnTriggerEnter called.");
-			if (playerGrid)
-				FindNewPath ();
-		}
-	}
-
 	// returns the position in world space of a given game object
 	Vector3 GetGridPos (Vector2 gridCoord)
 	{
@@ -224,4 +209,18 @@ public class EnemyController : MonoBehaviour
 		return GameObject.Find (newName);
 	}
 
+	void OnTriggerEnter2D (Collider2D col)
+	{
+		if (col.gameObject.name.StartsWith ("GridUnit")) {
+			enemyGrid = col.gameObject;
+			enemyScript = enemyGrid.GetComponent <GridUnit> ();
+			//pathIndex++;
+			//if (pathIndex >= pathToPlayer.Count) {
+			//	pathIndex = pathToPlayer.Count;
+			//}
+			//Debug.Log ("OnTriggerEnter called.");
+			if (playerGrid)
+				FindNewPath ();
+		}
+	}
 }

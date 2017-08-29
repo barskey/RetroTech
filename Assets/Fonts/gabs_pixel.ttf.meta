@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: e3a7da3c732294cb6ba52de8de97d553
+timeCreated: 1503968713
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Gabs Pixel
+  fontNames:
+  - Gabs Pixel
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

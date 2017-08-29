@@ -15,7 +15,7 @@ public class PlayerHealth : MonoBehaviour
 	Animator anim;                                              // Reference to the Animator component.
 	Animator healthAnim;                                        // Reference to the Health Bar Animator
 //	AudioSource playerAudio;                                    // Reference to the AudioSource component.
-//	PlayerMovement playerMovement;                              // Reference to the player's movement.
+	PlayerController playerController;                          // Reference to the player controller.
 //	PlayerShooting playerShooting;                              // Reference to the PlayerShooting script.
 	bool isDead;                                                // Whether the player is dead.
 	bool damaged;                                               // True when the player gets damaged.
@@ -27,7 +27,7 @@ public class PlayerHealth : MonoBehaviour
 		anim = GetComponent <Animator> ();
 		healthAnim = GameObject.Find ("HealthBar").GetComponent <Animator> ();
 //		playerAudio = GetComponent <AudioSource> ();
-//		playerMovement = GetComponent <PlayerMovement> ();
+		playerController = GetComponent <PlayerController> ();
 //		playerShooting = GetComponentInChildren <PlayerShooting> ();
 
 		// Set the initial health of the player.
@@ -90,14 +90,14 @@ public class PlayerHealth : MonoBehaviour
 		//playerShooting.DisableEffects ();
 
 		// Tell the animator that the player is dead.
-		//anim.SetTrigger ("Die");
+		anim.SetFloat ("Speed", 0);
 
 		// Set the audiosource to play the death clip and play it (this will stop the hurt sound from playing).
 		//playerAudio.clip = deathClip;
 		//playerAudio.Play ();
 
 		// Turn off the movement and shooting scripts.
-		//playerMovement.enabled = false;
+		playerController.enabled = false;
 		//playerShooting.enabled = false;
 	}       
 }
