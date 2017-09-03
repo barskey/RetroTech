@@ -41,14 +41,10 @@ public class PlayerHealth : MonoBehaviour
 	void Update ()
 	{
 		// If the player has just been damaged...
-		if(damaged)
-		{
+		if (damaged && !isDead) {
 			// ... set the colour of the damageImage to the flash colour.
 			damageImage.color = flashColor;
-		}
-		// Otherwise...
-		else
-		{
+		} else {
 			// ... transition the colour back to clear.
 			damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
 		}
@@ -73,8 +69,7 @@ public class PlayerHealth : MonoBehaviour
 		//playerAudio.Play ();
 
 		// If the player has lost all it's health and the death flag hasn't been set yet...
-		if(currentHealth <= 0 && !isDead)
-		{
+		if(currentHealth <= 0 && !isDead) {
 			// ... it should die.
 			Death ();
 		}

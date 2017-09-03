@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: bc6b780a533bb45508473174e1457fb5
+timeCreated: 1504378860
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: 7LED
+  fontNames:
+  - 7LED
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

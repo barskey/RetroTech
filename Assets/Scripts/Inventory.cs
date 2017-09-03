@@ -10,20 +10,25 @@ public class Inventory : MonoBehaviour {
 	public GameObject equipped;
 	[HideInInspector]
 	public Weapon weapon;
+	[HideInInspector]
+	public WeaponBar weaponBar;
 
 	private GameObject attachPoint;
 	private List <GameObject> equippedWeapons = new List <GameObject> ();
 
 	void Awake ()
 	{
-		attachPoint = GameObject.Find ("weaponAttach");
+		attachPoint = GameObject.Find ("weaponAttach"); // attachment point for instantiating weapons
+		weaponBar = GameObject.Find ("WeaponBar").GetComponent <WeaponBar> (); // get the weapon bar script so we can communicate with it
 
-		// Instantiate and disable all the weapons from the inventory
+		// for each weapon available...
 		for (int i = 0; i < weapons.Count; i++) {
-			// if there is a weapon in that slot...
+			// if a weapon is added...
 			if (weapons [i]) {
-				equippedWeapons.Add (GameObject.Instantiate (weapons[i], attachPoint.transform));
-				equippedWeapons[i].SetActive (false);
+				equippedWeapons.Add (GameObject.Instantiate (weapons[i], attachPoint.transform)); // instantiate
+				equippedWeapons[i].SetActive (false); // and disbale initially
+
+				weaponBar.ActivateSlot (i, weapons [i]); // set up the image on the weapon bar slot
 			}
 		}
 
@@ -39,6 +44,8 @@ public class Inventory : MonoBehaviour {
 
 			equipped = equippedWeapons[index]; // store a reference to it
 			equipped.SetActive (true); // enable it
+
+			weaponBar.ActivateSlot (index, equipped);
 			weapon = equipped.GetComponent <Weapon> (); // get the script component for this weapon
 		}
 	}

@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
 
 		if (Input.GetKeyDown (KeyCode.Return)) {
 			inv.weapon.Attack (); // shoot or swing the equipped weapon
+			//inv.weaponBar.SetAmmoLeft (9); // if successful, decrement the rounds left
 		}
 
 		if (Input.GetKeyDown (KeyCode.Alpha1)) {

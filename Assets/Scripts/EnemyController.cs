@@ -41,7 +41,7 @@ public class EnemyController : MonoBehaviour
 	bool[,] tilesmap; // tiles in grid used for pathfinding
 
 	// Use this for initialization
-	void Start ()
+	void Awake ()
 	{
 		rb2d = GetComponent <Rigidbody2D> ();
 		player = GameObject.Find ("Player");
@@ -49,6 +49,8 @@ public class EnemyController : MonoBehaviour
 
 		secsPerAttack = 1 / AttackPerSec;
 		attackCooldown = 0;
+
+		maxSpeed = maxSpeed + Random.Range (-speedVar, speedVar);
 
 		// Set up the pathfinding grid
 		GameObject navGrid = GameObject.Find ("NavGrid");
@@ -128,7 +130,12 @@ public class EnemyController : MonoBehaviour
 				}
 			} else if (moveVector.y < 0 && moveVector.x == 0) { //else if next point is below
 				// move right/left toward next point
-				nextGridCoord = new Vector2 (enemyScript.col + dir, enemyScript.row);
+				float randDir = Mathf.Sign (Random.Range (-1f, 1f));
+				Vector2 newCoord = new Vector2 (enemyScript.col + randDir, enemyScript.row);
+				if (GameObject.Find (string.Format ("GridUnit_{0}-{1}", newCoord.y, newCoord.x)))
+					nextGridCoord = newCoord;
+				else
+					nextGridCoord = new Vector2 (enemyScript.col - randDir, enemyScript.row);
 				Move (dir);
 			} else {
 				// move in x toward next point if havent reached attack position
@@ -198,7 +205,11 @@ public class EnemyController : MonoBehaviour
 	Vector3 GetGridPos (Vector2 gridCoord)
 	{
 		string gridName = string.Format ("GridUnit_{0}-{1}", gridCoord.y, gridCoord.x);
-		return GameObject.Find (gridName).transform.position;
+		GameObject grid = GameObject.Find (gridName);
+		if (!grid) // if it exists
+			return transform.position; // return the transform position
+
+		return grid.transform.position; // return the gridunit transform position
 	}
 
 	// returns the adjacent grid square given a grid object and direction

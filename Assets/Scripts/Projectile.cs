@@ -19,7 +19,7 @@ public class Projectile : MonoBehaviour {
 			health.TakeDamage (damage);
 			Destroy (gameObject);
 		} else if (col.CompareTag ("Enemy")) {
-			Debug.Log (col.name);
+			Debug.Log (string.Format ("Hitting enemy {0}", col.name));
 			EnemyHealth health = col.GetComponent <EnemyHealth> ();
 			health.TakeDamage (damage);
 			Destroy (gameObject);
