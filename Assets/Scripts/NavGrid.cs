@@ -11,7 +11,6 @@ public class NavGrid : MonoBehaviour {
 	public Camera gameCam;
 	public GameObject gridUnit;
 	public bool drawAlways = false;
-	public bool go = false;
 
 	private float wd;
 	private float ht;
@@ -38,15 +37,8 @@ public class NavGrid : MonoBehaviour {
 		}
 	}
 
-	void Update()
+	public void CreateGrid()
 	{
-		if (go)
-			CreateGrid ();
-	}
-
-	void CreateGrid()
-	{
-		go = false;
 		for (int r = 0; r < gridRows; r++) {
 			for (int c = 0; c < gridCols; c++) {
 				string thisName = string.Format ("GridUnit_{0}-{1}", r, c);

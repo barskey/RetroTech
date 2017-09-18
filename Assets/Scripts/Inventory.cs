@@ -5,7 +5,7 @@ using UnityEngine;
 public class Inventory : MonoBehaviour {
 
 	public List <GameObject> weapons = new List <GameObject> ();
-	public GameObject armour;
+	public GameObject armor;
 	[HideInInspector]
 	public GameObject equipped;
 	[HideInInspector]

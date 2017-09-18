@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-	public Transform groundCheckCircle; // used to check if ground is overlapping
 	public float jumpForce = 200f; // force that determines how high this jumps
 	public float maxSpeed = 0.9f; // maximum speed
 	public float accel = 0.1f; // how fast this enemy accelerates
@@ -15,7 +14,6 @@ public class EnemyController : MonoBehaviour
 
 	bool facingRight = true; // used to flip transform for running left/right
 	bool grounded = false; // used to determine if can jump
-	float groundRadius = 0.05f; // radius of overlap circle used to determine if this is grounded
 
 	private GameObject player;
 	private Rigidbody2D rb2d;
@@ -86,7 +84,6 @@ public class EnemyController : MonoBehaviour
 	void FixedUpdate ()
 	{
 		// set the flag if player is standing on ground (hence can jump)
-		//grounded = Physics2D.OverlapCircle (groundCheckCircle.position, groundRadius, whatIsGound);
 		grounded = rb2d.velocity.y == 0 ? true : false;
 
 		// get the current grid the player is on
