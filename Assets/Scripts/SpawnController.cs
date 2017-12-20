@@ -15,7 +15,9 @@ public class SpawnController : MonoBehaviour {
 	{
 		anim = gameObject.GetComponent<Animator> ();
 
-		InvokeRepeating ("TrySpawnEnemy", spawnDelay, spawnDelay);
+		float randTime = Random.Range (0, spawnDelay);
+
+		InvokeRepeating ("TrySpawnEnemy", randTime, spawnDelay);
 	}
 
 	void TakeDamage (float dmg)
