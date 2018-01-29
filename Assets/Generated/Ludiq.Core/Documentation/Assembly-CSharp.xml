@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Assembly-CSharp</name>
+    </assembly>
+    <members>
+        <member name="T:CanvasScreenSpaceScaler">
+            <summary>
+            The script adjusts the Canvas's scale factor so that it matches the PixelPerfectCamera's.
+            <para />
+            The Canvas render mode must be "Screen Space - Camera". The selected render camera should use the "PixelPerfectCamera" script.
+            </summary>
+            <remarks>
+            Even if you don't use this script, setting integer values to Canvas Scaler's scale factor will result in pixel perfect rendering. However, 
+            the canvas' scale will not match the camera's. Use this script to have the Canvas' scale match the PixelPerfectCamera's.
+            </remarks>
+        </member>
+        <member name="T:CanvasWorldScaler">
+            <summary>
+            The script adjusts the Canvas's size so that it matches the UI camera's size.
+            <para />
+            The Canvas render mode must be "World Space". You should provide a UI camera that uses the "PixelPerfectCamera" script to the script.
+            </summary>
+            <remarks>
+            Even if you don't use this script, enabling the "pixel perfect" mode of the camera's "PixelPerfectCamera" script will result in a  
+            pixel perfect canvas under "World Space" mode. However, the size of the UI camera will not be the same as the camera's size. So, use this 
+            script to match the UI camera's size.
+            </remarks>
+        </member>
+        <member name="T:PixelPerfectCamera">
+            Adjusts the Camera component's orthographic size according to the supplied targeted size. If PixelPerfect is enabled, 
+            the camera's pixels per unit will be set to a multiple of the assets' pixels per unit. Thus, an asset pixel will
+            render to an integer number of screen pixels.
+            
+            In order to get pixel perfect result, point-sampling must be used in textures. Using linear filtering even in a 1-1 mapping, can be blurry. 
+            For example if your sprites have a center pivot and the screen has a non-multiple of 2 dimension or if you translate your sprites
+            in sub-pixel values. Using point-sampling solves all these issues.
+        </member>
+        <member name="T:PixelSnap">
+            <summary>
+            The script enables retroSnap or eliminates jittering when traslating an object under a non pixel perfect resolution.
+            <para />
+            When the game object is rendered by a camera with a PixelPerfectCamera script, it uses retroSnap if enabled for this camera.This will
+            make the position of the object snap to the pixel grid as defined by the asset's pixels per unit. This will make the object move to multiples 
+            of screen pixels at once making a more "snappy" movement.
+            <para />
+            When the REDUCE_JITTER preprocessor symbol is enabled, reduce-jitter mode is used when retroSnap is disabled.This will work under any camera, 
+            regardless if it has the pixel pefrect camera script attached or not. This can be helpful when translating pixelart objects in a non pixel-pefrect resolution
+            and point-filtering is used.
+            </summary>
+            <remarks>
+            The script adjusts the object's position (while rendering) to that it snaps. It then restores the original position.
+            <para />
+            For Sprites only: the script takes into account the pivot point and screen resolution for proper texel to screen-pixel placement.
+            <para />
+            It works only when playing.
+            </remarks>
+        </member>
+        <member name="T:PathFind.Grid">
+            The grid of nodes we use to find path
+        </member>
+        <member name="M:PathFind.Grid.#ctor(System.Int32,System.Int32,System.Single[0:,0:])">
+            Create a new grid with tile prices.
+            width: grid width.
+            height: grid height.
+            tiles_costs: 2d array of floats, representing the cost of every tile.
+                          0.0f = unwalkable tile.
+                          1.0f = normal tile.
+        </member>
+        <member name="M:PathFind.Grid.#ctor(System.Int32,System.Int32,System.Boolean[0:,0:])">
+            Create a new grid of just walkable / unwalkable.
+            width: grid width.
+            height: grid height.
+            walkable_tiles: the tilemap. true for walkable, false for blocking.
+        </member>
+        <member name="T:PathFind.Node">
+            A node in the grid map
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:PathFind.Pathfinding" -->
+        <member name="T:PathFind.Point">
+            A 2d point on the grid
+        </member>
+    </members>
+</doc>

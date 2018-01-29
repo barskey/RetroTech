@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Assembly-CSharp-Editor</name>
+    </assembly>
+    <members>
+        <member name="M:UnityEditor.LineBrush.GetPointsOnLine(UnityEngine.Vector2Int,UnityEngine.Vector2Int,System.Boolean)">
+            <summary>
+            Added option to fill gaps for continuous lines.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Inventory : MonoBehaviour {
 
@@ -19,8 +20,20 @@ public class Inventory : MonoBehaviour {
 	void Awake ()
 	{
 		attachPoint = GameObject.Find ("weaponAttach"); // attachment point for instantiating weapons
-		weaponBar = GameObject.Find ("WeaponBar").GetComponent <WeaponBar> (); // get the weapon bar script so we can communicate with it
+		/*
+		// hack to get all gameobjects in HUD scene and iterate over them to find weaponslot
+		List<GameObject> rootObjects = new List<GameObject>();
+		Scene hudScene = SceneManager.GetSceneByBuildIndex (0);
+		hudScene.GetRootGameObjects( rootObjects );
 
+		// iterate root objects and do something
+		for (int i = 0; i < rootObjects.Count; ++i)
+		{
+			GameObject gameObject = rootObjects[ i ];
+			if (gameObject.transform.Find ("WeaponBar"))
+				weaponBar = gameObject.transform.Find ("WeaponBar").GetComponent <WeaponBar> ();
+		}
+		*/
 		// for each weapon available...
 		for (int i = 0; i < weapons.Count; i++) {
 			// if a weapon is added...
@@ -28,7 +41,8 @@ public class Inventory : MonoBehaviour {
 				equippedWeapons.Add (GameObject.Instantiate (weapons[i], attachPoint.transform)); // instantiate
 				equippedWeapons[i].SetActive (false); // and disbale initially
 
-				weaponBar.ActivateSlot (i, weapons [i]); // set up the image on the weapon bar slot
+				if (weaponBar)
+					weaponBar.ActivateSlot (i, weapons [i]); // set up the image on the weapon bar slot
 			}
 		}
 
@@ -45,8 +59,10 @@ public class Inventory : MonoBehaviour {
 			equipped = equippedWeapons[index]; // store a reference to it
 			equipped.SetActive (true); // enable it
 
-			weaponBar.ActivateSlot (index, equipped);
-			weapon = equipped.GetComponent <Weapon> (); // get the script component for this weapon
+			if (weaponBar) {
+				weaponBar.ActivateSlot (index, equipped);
+				weapon = equipped.GetComponent <Weapon> (); // get the script component for this weapon
+			}
 		}
 	}
 }

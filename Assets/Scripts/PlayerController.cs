@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,32 +19,70 @@ public class PlayerController : MonoBehaviour
 	private Rigidbody2D rb2d;
 	private Inventory inv;
 
+	private Scene hud;
+	private JoystickHandler joystickMovement;
+	private Vector3 direction;
+	private float xMin,xMax,yMin,yMax;
+
 	void Start ()
 	{
 		rb2d = GetComponent <Rigidbody2D> ();
 		anim = GetComponent <Animator> ();
 		inv = GetComponent <Inventory> ();
+
+		//Initialization of boundaries
+		xMax = Screen.width - 50; // I used 50 because the size of player is 100*100
+		xMin = Screen.width; 
+		yMax = Screen.height - 50;
+		yMin = Screen.height;
+	}
+
+	void OnEnable ()
+	{
+		SceneManager.sceneLoaded += OnSceneLoaded;
+	}
+
+	void OnSceneLoaded (Scene scene, LoadSceneMode mode)
+	{
+		Debug.Log (string.Format ("Scene {0} loaded.", scene.name));
+		if (scene.name == "HUD") {
+			GameObject[] rootObj = scene.GetRootGameObjects ();
+			foreach (GameObject go in rootObj)
+			{
+				if (go.transform.Find ("JoystickContainer") != null)
+					joystickMovement = go.transform.Find ("JoystickContainer").GetComponent <JoystickHandler> ();
+			}
+		}
 	}
 
 	void FixedUpdate ()
 	{
 		grounded = (true ? rb2d.velocity.y == 0 : false);
 
-		float move = Input.GetAxis ("Horizontal");
+		if(direction.magnitude != 0) {
+			transform.position += new Vector3 (direction.x * maxSpeed, 0f);
+			//transform.position = new Vector3 (Mathf.Clamp (transform.position.x, xMin, xMax), Mathf.Clamp (transform.position.y, yMin, yMax), 0f);//to restric movement of player
+		}    
 
-		anim.SetFloat ("Speed", Mathf.Abs(move));
+		//float move = Input.GetAxis ("Horizontal");
 
-		rb2d.velocity = new Vector2 (move * maxSpeed, rb2d.velocity.y);
+		anim.SetFloat ("Speed", Mathf.Abs(direction.x));
 
-		if (move > 0 && !facingRight) {
+		rb2d.velocity = new Vector2 (direction.x * maxSpeed, rb2d.velocity.y);
+
+		if (direction.x > 0 && !facingRight) {
 			Flip ();
-		} else if (move < 0 && facingRight) {
+		} else if (direction.x < 0 && facingRight) {
 			Flip ();
 		}
 	}
 
 	void Update ()
 	{
+		if (joystickMovement != null) {
+			direction = joystickMovement.inputDirection; //InputDirection can be used as per the need of your project
+		}
+
 		if (grounded && Input.GetKeyDown (KeyCode.Space)) {
 			// set ground bool in anim
 			rb2d.AddForce (new Vector2(0, jumpForce));
